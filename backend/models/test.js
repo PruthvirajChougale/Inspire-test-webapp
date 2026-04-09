@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const testSchema = new mongoose.Schema({
-    testId: {type:String, required: true, unique:true},
+    testId: {type:String, required: true, unique:true},//just batchId???
     title: {type: String, required: true},
     description: {type: String},
     duration: {type: Number, required: true},
