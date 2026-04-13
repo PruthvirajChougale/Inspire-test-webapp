@@ -1,4 +1,4 @@
-.counter {
+/* .counter {
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -180,5 +180,17 @@
   &::after {
     right: 0;
     border-right-color: var(--border);
+  }
+} */
+*{
+  margin:0;
+  padding:0
+}
+.test-container{
+  margin:1rem;
+}
+@media (min-width:768px){
+  .test-container {
+    margin: 2rem;
   }
 }
