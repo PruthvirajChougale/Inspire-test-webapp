@@ -5,7 +5,6 @@ function ButtonTest(){
             <Button variant='primary' onclick={()=>console.log("clicked")}>
                 Click me!!!
             </Button>
-            <div></div>
         </>
     )
 }
