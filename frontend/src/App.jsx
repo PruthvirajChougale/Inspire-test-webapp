@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Router>
-        <Layout style={{ minHeight: "100vh",backgroundColor: "#f3f3f3" }}>
+        <Layout style={{ minHeight: "100vh",backgroundColor: "#ffffff" }}>
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/button-test" element={<ButtonTest />} />
