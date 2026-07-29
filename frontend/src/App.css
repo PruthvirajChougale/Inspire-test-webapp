@@ -182,3 +182,60 @@
     border-right-color: var(--border);
   }
 } */
+*{
+  margin:0;
+  padding:0;
+  background-color: #fff;
+}
+:root {
+  /* Colors */
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary: #64748b;
+  --secondary-hover: #475569;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+
+  --text-light: #ffffff;
+  --radius: 8px;
+}
+
+/* Base button structure */
+.btn {
+  padding: 0.625rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out, transform 0.1s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Variant color modifiers */
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--text-light);
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: var(--text-light);
+}
+.btn-secondary:hover {
+  background-color: var(--secondary-hover);
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: var(--text-light);
+}
+.btn-danger:hover {
+  background-color: var(--danger-hover);
+}
