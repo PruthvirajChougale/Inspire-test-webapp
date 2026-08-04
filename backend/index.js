@@ -19,6 +19,7 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(express.json());
 
 // const ConnectToDB =async () =>{
     
