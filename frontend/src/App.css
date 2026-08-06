@@ -182,10 +182,27 @@
     border-right-color: var(--border);
   }
 } */
-*{
-  margin:0;
-  padding:0;
-  background-color: #fff;
+
+/* 1. Global reset for sizing and spacing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2. Full height and background on root parents */
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+/* 3. Ensure React container fills the entire screen */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 :root {
   /* Colors */
@@ -201,7 +218,7 @@
 }
 
 /* Base button structure */
-.btn {
+/* .btn {
   padding: 0.625rem 1.25rem;
   font-size: 0.95rem;
   font-weight: 500;
@@ -209,7 +226,7 @@
   border: none;
   cursor: pointer;
   transition: background-color 0.15s ease-in-out, transform 0.1s ease;
-}
+} */
 
 .btn:active {
   transform: scale(0.98);
@@ -239,3 +256,116 @@
 .btn-danger:hover {
   background-color: var(--danger-hover);
 }
+
+/* Container & Layout */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+/* Component: Card */
+.card {
+  background: #ffffff;
+  padding: 40px 32px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  height:auto;
+}
+
+/* Component: Input */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px 14px 12px 44px;
+  background-color: #f0f5ff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input-field:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+}
+
+.input-icon {
+  position: absolute;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.input-icon.left { left: 14px; }
+
+.input-icon-btn {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+/* Component: Button */
+.btn {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+/* .btn-primary {
+  background-color: #00569e;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #00447c;
+} */
+
+.full-width { width: 100%; }
+
+/* Page Specific Typography */
+.login-header { text-align: center; margin-bottom: 32px; }
+.login-header h2 { font-size: 1.75rem; font-weight: 700; color: #0f172a; }
+.login-header p { color: #64748b; font-size: 0.95rem; margin-top: 4px; }
+.forgot-link, .signup-link { color: #00569e; font-weight: 600; text-decoration: none; }
+.forgot-link:hover, .signup-link:hover { text-decoration: underline; }
+.login-footer { margin-top: 32px; text-align: center; font-size: 0.95rem; }
