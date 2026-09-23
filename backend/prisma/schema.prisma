@@ -1,11 +1,70 @@
+//datasource db {
+  // provider = "postgresql"
+  // url      = env("PGURI")
+//}
+
+// generator client {
+  //provider = "prisma-client-js"
+//}
+
+//model User {
+  //id           String   @id @default(uuid())
+  //username     String   @unique
+//  email        String   @unique
+ // passwordHash String   @map("password_hash")
+//  batchId      String   @map("batch_id")
+//  createdAt    DateTime @default(now()) @map("created_at")
+//  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Foreign key index for fast filtering by batch
+ // @@index([batchId])
+  
+  // Maps JS model 'User' to table 'users' in SQL
+ // @@map("users")
+//}
+
+
 datasource db {
   provider = "postgresql"
-  // url      = env("PGURI")
+  //url      = env("PGURI")
 }
 
 generator client {
   provider = "prisma-client-js"
 }
+
+// ------------------------------------
+// ENUMS
+// ------------------------------------
+
+enum QuestionType {
+  SINGLE_CORRECT
+  MULTIPLE_CORRECT
+  NUMERIC
+  MATCH_MAKING
+}
+
+enum ResponseType {
+  ATTEMPT
+  PRACTICE
+}
+
+enum PostStatus {
+  CORRECT
+  PARTIALLY_CORRECT
+  INCORRECT
+}
+
+enum PreStatus {
+  UNATTEMPTED
+  VISITED
+  REVIEWED
+  ATTEMPTED
+}
+
+// ------------------------------------
+// MODELS
+// ------------------------------------
 
 model User {
   id           String   @id @default(uuid())
@@ -16,9 +75,87 @@ model User {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
-  // Foreign key index for fast filtering by batch
+  // Relations
+  tests     Test[]     @relation("UserTests")
+  responses Response[]
+
   @@index([batchId])
-  
-  // Maps JS model 'User' to table 'users' in SQL
   @@map("users")
+}
+
+model Test {
+  id          String   @id @default(uuid())
+  batchId     String   @map("batch_id")
+  isActive    Boolean  @default(true) @map("is_active")
+  name        String
+  description String?
+  duration    Int      // Duration in minutes
+  
+  // JSON format example: {"physics": ["q1", "q2"], "chemistry": ["q3"]}
+  subjects    Json     @default("{}") 
+  
+  dateTime    DateTime @map("date_time")
+  totalMarks  Int      @map("total_marks")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  users     User[]     @relation("UserTests")
+  questions Question[]
+  responses Response[]
+
+  @@index([batchId])
+  @@map("tests")
+}
+
+model Question {
+  id            String       @id @default(uuid())
+  testId        String       @map("test_id")
+  questionNo    Int          @map("question_no")
+  type          QuestionType
+  questionText  String       @map("question_text")
+  questionImg   String?      @map("question_img")
+  
+  // Stored as arrays or JSON depending on question type
+  optionText    String[]     @default([]) @map("option_text")
+  optionImg     String[]     @default([]) @map("option_img")
+  
+  // JSON format to support String, String[], or [float, float] range for numeric questions
+  correctAns    Json         @map("correct_ans") 
+  
+  marks         Float
+  negativeMarks Float        @default(0.0) @map("negative_marks")
+
+  // Relations
+  test      Test       @relation(fields: [testId], references: [id], onDelete: Cascade)
+  responses Response[]
+
+  @@unique([testId, questionNo])
+  @@map("questions")
+}
+
+model Response {
+  id            String       @id @default(uuid())
+  type          ResponseType
+  questionId    String       @map("question_id")
+  testId        String       @map("test_id")
+  userId        String       @map("user_id")
+  
+  // Stores user input as Array of strings or range inputs
+  userResponse  String[]     @default([]) @map("user_response")
+  marksObtained Float?       @map("marks_obtained")
+  
+  postStatus    PostStatus?  @map("post_status")
+  preStatus     PreStatus    @default(UNATTEMPTED) @map("pre_status")
+  
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  // Relations
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  test     Test     @relation(fields: [testId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, testId, questionId])
+  @@map("responses")
 }
